@@ -3,8 +3,15 @@ const staticMethods = require('./constants/staticMethods')
 const { syncMethods, asyncMethods } = require('./constants/staticModelMethods')
 
 const sequelize = {
+  options: {
+    get define() {
+      throw new Error(
+        'sequelize-jest-helpers does not support extending sequelize.Model. ' +
+        'Please use sequelize.define to declare models.')
+    }
+  },
   define: (modelName, modelDefn, metaData = {}) => {
-    const model = function () {}
+    const model = function () { }
     model.modelName = modelName
 
     const attachHook = name => hook => {
